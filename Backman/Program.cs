@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Backman
+namespace Backman.Services
 {
     static class Program
     {
@@ -14,6 +14,14 @@ namespace Backman
         [STAThread]
         static void Main()
         {
+#if DEBUG
+            BackService bs = new BackService();
+
+            bs.Start(new String[0]);
+
+            Application.ApplicationExit += (sender, e) => bs.Stop();
+#endif
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());

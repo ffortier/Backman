@@ -5,9 +5,10 @@
   </startup>
   <system.serviceModel>
     <services>
-      <service name="Backman.Services.Services.Impl.NotificationService">
-        <endpoint address="net.tcp://localhost:3000/" binding="netTcpBinding"
-          contract="Backman.Services.Services.INotificationService" />
+      <service name="Backman.Services.Impl.NotificationService">
+        <endpoint address="net.tcp://localhost:3000/"
+                  binding="netTcpBinding"
+                  contract="Backman.Services.INotificationService" />
       </service>
     </services>
     <client>
