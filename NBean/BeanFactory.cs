@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -30,12 +27,12 @@ namespace NBean
         private Dictionary<string, object> singletonBeans = new Dictionary<string, object>();
 
         public BeanFactory()
-            : this(Assembly.GetCallingAssembly().GetName().Name + ".appContext.xml", Assembly.GetCallingAssembly())
+            : this("appContext.xml", Assembly.GetCallingAssembly(), true)
         {
         }
 
-        public BeanFactory(string classPath, Assembly assembly)
-            : this(OpenClassPath(classPath, assembly))
+        public BeanFactory(string classPath, Assembly assembly, bool prependAssemblyName)
+            : this(OpenClassPath(classPath, assembly, prependAssemblyName))
         {
         }
 
@@ -93,8 +90,13 @@ namespace NBean
             return t.InvokeMember(null, BindingFlags.Instance | BindingFlags.CreateInstance | BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.NonPublic, Type.DefaultBinder, null, args.ToArray());
         }
 
-        private static Stream OpenClassPath(string classPath, Assembly assembly)
+        private static Stream OpenClassPath(string classPath, Assembly assembly, bool prependAssemblyName)
         {
+            if (prependAssemblyName)
+            {
+                classPath = assembly.GetName().Name + "." + classPath;
+            }
+
             return assembly.GetManifestResourceStream(classPath);
         }
     }
