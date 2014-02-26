@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NBean;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,8 +15,10 @@ namespace Backman.Services
         [STAThread]
         static void Main()
         {
+            BeanFactory = new BeanFactory();
+
 #if DEBUG
-            BackService bs = new BackService();
+            BackService bs = new BackService(BeanFactory);
 
             bs.Start(new String[0]);
 
@@ -26,5 +29,7 @@ namespace Backman.Services
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
         }
+
+        public static BeanFactory BeanFactory { get; private set; }
     }
 }

@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.notificationServiceFactory1 = new Backman.Services.NotificationServiceFactory(this.components);
             this.SuspendLayout();
             // 
             // notifyIcon1
@@ -52,6 +53,7 @@
         #endregion
 
         private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private NotificationServiceFactory notificationServiceFactory1;
     }
 }
 

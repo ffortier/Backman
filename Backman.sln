@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backman", "Backman\Backman.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backman.Test", "Backman.Test\Backman.Test.csproj", "{9672466D-2E83-4709-B9D6-C31BFC885783}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBean", "NBean\NBean.csproj", "{78F16FEA-4C7B-4F6B-AD12-519F5471E24E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{9672466D-2E83-4709-B9D6-C31BFC885783}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9672466D-2E83-4709-B9D6-C31BFC885783}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9672466D-2E83-4709-B9D6-C31BFC885783}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78F16FEA-4C7B-4F6B-AD12-519F5471E24E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78F16FEA-4C7B-4F6B-AD12-519F5471E24E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78F16FEA-4C7B-4F6B-AD12-519F5471E24E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78F16FEA-4C7B-4F6B-AD12-519F5471E24E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

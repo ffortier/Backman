@@ -7,8 +7,7 @@ using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Windows.Forms;
 using System.ComponentModel;
-using Backman.Services;
-using Backman.Services.Impl;
+using Backman.Services.Services;
 
 namespace Backman.Services
 {
@@ -16,12 +15,14 @@ namespace Backman.Services
     {
         private DuplexChannelFactory<INotificationService> innerFactory;
 
-        public NotificationServiceFactory()
+        static NotificationServiceFactory()
         {
-            if (LicenseManager.UsageMode == LicenseUsageMode.Runtime)
-            {
-                this.Init(Program.BeanFactory.Get<Backman.Services.INotificationCallback>("notificationCallback"));
-            }
+            Injector.Infer<Backman.Services.Services.INotificationCallback>(new Backman.Services.Services.Impl.NotificationCallback());
+        }
+
+        public NotificationServiceFactory()
+            : this(Injector.Get<Backman.Services.Services.INotificationCallback>())
+        {
         }
 
         public NotificationServiceFactory(IContainer container) : this()
@@ -32,73 +33,30 @@ namespace Backman.Services
             }
         }
 
-        private void Init(INotificationCallback callbackObject)
+        public NotificationServiceFactory(Backman.Services.Services.INotificationCallback callbackObject)
         {
+            if (this.DesignMode) return;
+
             this.innerFactory = new DuplexChannelFactory<INotificationService>(callbackObject, "NotificationService");
-            this.innerFactory.Closed += (sender, e) => this.OnClosed(e);
-            this.innerFactory.Closing += (sender, e) => this.OnClosing(e);
-            this.innerFactory.Faulted += (sender, e) => this.OnFaulted(e);
-            this.innerFactory.Opened += (sender, e) => this.OnOpened(e);
-            this.innerFactory.Opening += (sender, e) => this.OnOpening(e);
+            this.innerFactory.Closed += (sender, e) => this.Closed(this, e);
+            this.innerFactory.Closing += (sender, e) => this.Closing(this, e);
+            this.innerFactory.Faulted += (sender, e) => this.Faulted(this, e);
+            this.innerFactory.Opened += (sender, e) => this.Opened(this, e);
+            this.innerFactory.Opening += (sender, e) => this.Opening(this, e);
             this.CallbackObject = callbackObject;
-        }
-
-        protected void OnClosed(EventArgs e)
-        {
-            if (this.Closed != null)
-            {
-                this.Closed(this, e);
-            }
-        }
-
-        protected void OnClosing(EventArgs e)
-        {
-            if (this.Closing != null)
-            {
-                this.Closing(this, e);
-            }
-        }
-
-        protected void OnFaulted(EventArgs e)
-        {
-            if (this.Faulted != null)
-            {
-                this.Faulted(this, e);
-            }
-        }
-
-        protected void OnOpened(EventArgs e)
-        {
-            if (this.Opened != null)
-            {
-                this.Opened(this, e);
-            }
-        }
-
-        protected void OnOpening(EventArgs e)
-        {
-            if (this.Opening != null)
-            {
-                this.Opening(this, e);
-            }
         }
 
         [Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Services.INotificationCallback CallbackObject { get; private set; }
 
-        INotificationService IChannelFactory<INotificationService>.CreateChannel(EndpointAddress to, Uri via)
+        public INotificationService CreateChannel(EndpointAddress to, Uri via)
         {
             return this.innerFactory.CreateChannel(to, via);
         }
 
-        INotificationService IChannelFactory<INotificationService>.CreateChannel(EndpointAddress to)
+        public INotificationService CreateChannel(EndpointAddress to)
         {
             return this.innerFactory.CreateChannel(to);
-        }
-
-        public INotificationService CreateChannel()
-        {
-            return this.innerFactory.CreateChannel();
         }
 
         public T GetProperty<T>() where T : class

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="appContext"
+    targetNamespace="http://tempuri.org/appContext.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://tempuri.org/appContext.xsd"
+    xmlns:tns="http://tempuri.org/appContext.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+  <xs:complexType name="Reference">
+    <xs:attribute name="bean" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="Argument">
+    <xs:choice minOccurs="0">
+      <xs:element name="ref" type="Reference"/>
+    </xs:choice>
+    <xs:attribute name="index" type="xs:int" use="required"/>
+    <xs:attribute name="value" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="Bean">
+    <xs:sequence>
+      <xs:element name="constructor-arg" minOccurs="0" maxOccurs="unbounded" type="tns:Argument"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="class" type="xs:string"/>
+    <xs:attribute name="singleton" type="xs:boolean" default="true"/>
+  </xs:complexType>
+  <xs:complexType name="AppContext">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="bean" type="tns:Bean"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:element name="appContext" type="tns:AppContext" />
+</xs:schema>

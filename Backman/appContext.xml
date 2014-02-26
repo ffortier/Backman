@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<appContext xmlns="http://tempuri.org/appContext.xsd">
+  <bean id="notificationService" class="Backman.Services.Impl.NotificationService, Backman" singleton="true">
+    <constructor-arg index="0">
+      <ref bean="operationContext" />
+    </constructor-arg>
+  </bean>
+  <bean id="operationContext" class="Backman.Services.Impl.OperationContextLookUp, Backman" singleton="true" />
+  <bean id="notificationCallback" class="Backman.Services.Impl.NotificationCallback, Backman" singleton="false" />
+</appContext>

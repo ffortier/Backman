@@ -4,30 +4,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ServiceModel;
-using Backman.Services.Services.Model;
+using Backman.Services.Model;
 
-namespace Backman.Services.Services.Impl
+namespace Backman.Services.Impl
 {
     [ServiceBehavior(ConcurrencyMode=ConcurrencyMode.Reentrant, InstanceContextMode=InstanceContextMode.Single)]
-    class NotificationService : INotificationService
+    class NotificationService : INotificationServiceExtended
     {
-        static NotificationService()
-        {
-            Injector.Infer<OperationContext>("Current", () => OperationContext.Current);
-        }
-
+        private IOperationContextLookUp contextLookUp;
         private List<INotificationCallback> observables = new List<INotificationCallback>();
+
+        public NotificationService(IOperationContextLookUp contextLookUp)
+        {
+            this.contextLookUp = contextLookUp;
+        }
 
         public void Register()
         {
-            var callback = Injector.Get<OperationContext>("Current").GetCallbackChannel<INotificationCallback>();
+            var callback = contextLookUp.Current.GetCallbackChannel<INotificationCallback>();
 
             observables.Add(callback);
         }
 
         public void Unregister()
         {
-            var callback = Injector.Get<OperationContext>("Current").GetCallbackChannel<INotificationCallback>();
+            var callback = contextLookUp.Current.GetCallbackChannel<INotificationCallback>();
 
             observables.Remove(callback);
         }

@@ -7,7 +7,7 @@
     <ProjectGuid>{BF5D3652-2F17-4E63-985B-16F2254A6ACB}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Backman.Services</RootNamespace>
+    <RootNamespace>Backman</RootNamespace>
     <AssemblyName>Backman</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -57,8 +57,11 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Injector.cs" />
-    <Compile Include="Services\NotificationServiceFactory.cs" />
+    <Compile Include="Services\INotificationServiceExtended.cs" />
+    <Compile Include="Services\IOperationContextLookUp.cs" />
+    <Compile Include="Services\NotificationServiceFactory.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Impl\NotificationCallback.cs" />
@@ -66,6 +69,7 @@
     <Compile Include="Services\INotificationCallback.cs" />
     <Compile Include="Services\INotificationService.cs" />
     <Compile Include="Services\Model\ProgressData.cs" />
+    <Compile Include="Services\Impl\OperationContextLookUp.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -96,6 +100,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Configuration\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="appContext.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NBean\NBean.csproj">
+      <Project>{78f16fea-4c7b-4f6b-ad12-519f5471e24e}</Project>
+      <Name>NBean</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

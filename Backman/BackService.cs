@@ -6,18 +6,19 @@ using System.Threading.Tasks;
 using System.ServiceModel;
 using System.Threading;
 using System.Diagnostics;
-using Backman.Services.Services.Impl;
+using Backman.Services;
+using NBean;
 
 namespace Backman.Services
 {
     class BackService : System.ServiceProcess.ServiceBase
     {
         private ServiceHost host;
-        private NotificationService singleton;
+        private INotificationServiceExtended singleton;
 
-        public BackService()
+        public BackService(BeanFactory beanFactory)
         {
-            this.singleton = new NotificationService();
+            this.singleton = beanFactory.Get<INotificationServiceExtended>("notificationService");
             this.host = new ServiceHost(singleton);
             this.host.Opened += host_Opened;
         }

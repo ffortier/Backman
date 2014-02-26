@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
-using System.Runtime.Serialization;
 
-namespace Backman.Services.Model
+namespace Backman.Services
 {
-    [DataContract]
-    class ProgressData
+    interface IOperationContextLookUp
     {
+        OperationContext Current { get; }
     }
 }

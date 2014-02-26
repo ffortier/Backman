@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ServiceModel;
 
-namespace Backman.Services.Services.Impl
+namespace Backman.Services.Impl
 {
     [ServiceBehavior(UseSynchronizationContext=true)]
     class NotificationCallback : INotificationCallback
